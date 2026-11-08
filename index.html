@@ -1381,9 +1381,9 @@ function MB_run(s, M, w, o) {
   for (let t = 0; t < M; t++) {
     const add = (t < fill ? 0 : C) + (t === 0 ? L : 0);
     if (t < fill) ef += C;
-    AK.forEach(k => { const a = add * (w[k] || 0); h[k] += a; b[k] += a; });
+    for (let j = 0; j < 5; j++) { const k = AK[j], wk = w[k]; if (!wk) continue; const a = add * wk; h[k] += a; b[k] += a; }
     let r = 0;
-    AK.forEach(k => { const g0 = SER[k][s + t + 1] / SER[k][s + t]; const g = (tax && k === "dep") ? 1 + (g0 - 1) * .846 : g0; h[k] *= g; r += (w[k] || 0) * g0; });
+    for (let j = 0; j < 5; j++) { const k = AK[j]; if (!h[k] && !w[k]) continue; const sk = SER[k], g0 = sk[s + t + 1] / sk[s + t]; h[k] *= (tax && j === 0) ? 1 + (g0 - 1) * .846 : g0; r += (w[k] || 0) * g0; }
     const eg = SER.dep[s + t + 1] / SER.dep[s + t]; ef *= tax ? 1 + (eg - 1) * .846 : eg;
     tot = h.dep + h.spx + h.kospi + h.gold + h.usd;
     idx *= r; if (idx > pk) pk = idx; if (1 - idx / pk > mdd) mdd = 1 - idx / pk;
@@ -1506,7 +1506,7 @@ const MBr = v => v >= 10000 ? (v / 10000).toFixed(1).replace(".0", "") + "억" :
 })();
 
 /* ---------- compare section ---------- */
-(function () {
+window.__BPQ=window.__BPQ||[];__BPQ.push(function () {
   const sec = document.getElementById("compare"), st = { L: 3000, C: 50, Y: 10, T: 1 };
   const OPT = [
     { n: "예금", sub: "국내 은행 평균 예금금리", tag: "안정형", desc: "dep", w: { dep: 1 }, col: "--c-dep" },
@@ -1541,10 +1541,10 @@ const MBr = v => v >= 10000 ? (v / 10000).toFixed(1).replace(".0", "") + "억" :
     let ax = '<div class="mono" style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted)">'; for (let i = 0; i <= 4; i++) ax += "<span>" + MB_sh(lo + (hi - lo) * i / 4) + "</span>"; document.getElementById("cmpAx").innerHTML = ax + "</div>";
   }
   MB_segs(sec, st, render); render();
-})();
+});
 
 /* ---------- profile: choices, best choice, examples, next step ---------- */
-(function () {
+__BPQ.push(function () {
   const $ = id => document.getElementById(id), num = id => Math.max(0, +$(id).value || 0);
   const NM = { dep: "예금", spx: "S&P 500", kospi: "KOSPI", gold: "금", usd: "달러" };
   const TYPES = [[5, "안정형", 3], [12, "안정추구형", 2.5], [22, "위험중립형", 2], [35, "적극투자형", 1.5], [101, "공격투자형", 1]], MU = 1;
@@ -1667,10 +1667,10 @@ const MBr = v => v >= 10000 ? (v / 10000).toFixed(1).replace(".0", "") + "억" :
   $("hgIn").addEventListener("input", () => { const v = $("hgIn").value; if (v === "") return; document.querySelectorAll("#hgSegs button").forEach(x => x.setAttribute("aria-pressed", "false")); window.MBhg = Math.max(-5, Math.min(15, +v || 0)); showNext("home", false); });
   window.MBnextRefresh = () => showNext("home", false);
   render(read());
-})();
+});
 
 /* ---------- AI life roadmap ---------- */
-(function () {
+__BPQ.push(function () {
   const $ = id => document.getElementById(id);
   const AL = { dep: "예금", spx: "S&P 500", kospi: "KOSPI", gold: "금", usd: "달러" };
   const COL = { dep: "--c-dep", spx: "--c-spx", kospi: "--c-ks", gold: "--c-gold", usd: "--c-usd" };
@@ -1849,7 +1849,7 @@ ${JSON.stringify(data)}`;
     try { await navigator.clipboard.writeText(t); $("rmMsg").textContent = "프롬프트를 복사했습니다. 사용하는 AI에 붙여 넣으세요."; }
     catch (e) { const ta = document.createElement("textarea"); ta.value = t; ta.className = "rmta"; $("rmMsg").replaceWith(ta); ta.select(); } };
   tabs(); showEx(0);
-})();
+});
 
 </script>
 <script>
@@ -1858,7 +1858,7 @@ ${JSON.stringify(data)}`;
    State: (year t, wealth grid i, home bought flag f). Decisions: fulfil available goals or not, and an internal
    portfolio choice among historical model portfolios. Objective: maximise expected total goal utility.
    Only goal probabilities / timing are shown to the user (no portfolio instruction). */
-(function () {
+__BPQ.push(function () {
   const $ = id => document.getElementById(id);
   const num = (id, d) => { const el = $(id); if (!el) return d; const v = parseFloat(el.value); return isFinite(v) ? v : d; };
   const PORT = [
@@ -1961,7 +1961,8 @@ ${JSON.stringify(data)}`;
   document.addEventListener("DOMContentLoaded", bindEx); if (document.readyState !== "loading") bindEx();
   document.addEventListener("DOMContentLoaded", () => { const b = $("egGo"); if (b) b.onclick = render; });
   if (document.readyState !== "loading") { const b = $("egGo"); if (b) b.onclick = render; }
-})();
+});
+(function(){var go=function(){var f=__BPQ.shift();if(!f){window.__BPready=1;document.dispatchEvent(new Event('bp-ready'));return}try{f()}catch(e){console.error(e)}setTimeout(go,0)};requestAnimationFrame(function(){setTimeout(go,30)})})();
 
 </script>
 </body>
