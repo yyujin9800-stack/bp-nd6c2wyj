@@ -29,6 +29,7 @@ window.__BPSLOT=["안정형", "안정추구형", "위험중립형", "적극투�
   if(L==='ko')return;
   var LI=L==='en'?0:1, D=window.__BPD||{}, HK=/[가-힣]/;
   // currency: KRW -> local at PPP (GDP PPP 2024: KRW 809/US$, FR 0.72 EUR/US$)
+  try{var H=document.documentElement;H.setAttribute('translate','no');H.classList.add('notranslate');var mg=document.createElement('meta');mg.name='google';mg.content='notranslate';document.head&&document.head.appendChild(mg);}catch(e){}
   var CUR=L==='en'?{r:810,s:'$'}:{r:1120,s:'€'};window.__BPCUR=CUR;
   function money(v){
     v=v/CUR.r;
@@ -97,6 +98,7 @@ window.__BPSLOT=["안정형", "안정추구형", "위험중립형", "적극투�
     var p=n.parentNode;if(!p||p.nodeName==='SCRIPT'||p.nodeName==='STYLE'||p.nodeName==='TEXTAREA')return;
     var v=n.nodeValue;if(n.__bps===v)return;
     if(!HK.test(v))return;
+    n.__bpc=(n.__bpc||0)+1;if(n.__bpc>4)return;
     var o=tr(v);n.__bpo=v;if(o!==v){n.__bps=o;n.nodeValue=o;}
   }
   function doEl(el){
@@ -834,6 +836,7 @@ h1{font-size:clamp(30px,4.9vw,60px)!important}.sub{font-size:20px;font-weight:70
       <a href="#pricing">플랜</a>
       <a href="#faq">FAQ</a>
       <span class="langsw" aria-label="Language"><a href="?lang=ko" data-l="ko">KO</a><a href="?lang=en" data-l="en">EN</a><a href="?lang=fr" data-l="fr">FR</a></span>
+      
       
       
       
